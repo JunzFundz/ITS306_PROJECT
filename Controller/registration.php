@@ -21,7 +21,11 @@ if(isset($_POST['register'])){
     $sanitized_username = filter_var($username, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $sanitized_password = filter_var($password, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     
-    $result = $user->register($sanitized_username, $sanitized_password);
+    $hash_password = password_hash($sanitized_password, PASSWORD_DEFAULT);
+
+    $stmt = $db->prepare("INSERT INTO users (username, password, date_created) VALUES (?,?,NOW())");
+    $stmt->bind_param("ss", $sanitized_username, $hash_password);
+    $result = $stmt->execute();
 
     if($result){
         header('location: ../pages/login.php');
@@ -29,3 +33,5 @@ if(isset($_POST['register'])){
         echo "Error";
     }
 }
+
+    $result = $user->register($sanitized_username, $sanitized_password);

@@ -17,7 +17,7 @@ class Users extends Dbh
         return $result;
     }
 
-    public function login_ni_siya($username, $password)
+    public function login($username, $password)
     {
         $db = $this->connect(); 
 
@@ -33,7 +33,7 @@ class Users extends Dbh
                 if (password_verify($password, $pass)) {
                     $_SESSION['id'] = $row['id'];
 
-                    $redirect = ($_SESSION['id'] === 41) ? '../public/admin/home.php' : '../public/user/home.php';
+                    $redirect = ($_SESSION['id'] === 54) ? '../public/admin/home.php' : '../public/user/home.php';
 
                     return $redirect;
                 } else {
@@ -43,6 +43,13 @@ class Users extends Dbh
         } else {
             return 2; //User not found
         }
+    }
+
+    public function total($price, $quantity)
+    {
+        $total = $price * $quantity;
+        return $total;
+
     }
 
 }

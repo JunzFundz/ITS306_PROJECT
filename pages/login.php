@@ -32,7 +32,7 @@
                         <input type="password" class="input" id="password" placeholder="Password" />
 
                         <div><a class="link link-hover">Forgot password?</a></div>
-                        <button type="button" class="btn btn-neutral mt-4" id="loginuser">Login</button>
+                        <button type="button" class="btn btn-neutral mt-4 loginuser" id="loginuser">Login</button>
                     </fieldset>
                 </div>
             </div>
@@ -40,13 +40,13 @@
     </div>
     
 </body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function() {
 
-        $('#loginuser').on('click', function(e) {
+        $('.loginuser').on('click', function(e) {
             e.preventDefault();
 
             const username = $('#username').val();

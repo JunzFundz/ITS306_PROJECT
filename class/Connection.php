@@ -5,7 +5,7 @@ class Dbh
     private $host = 'localhost';
     private $username = 'root';
     private $password = 'fundador142';
-    private $dbname = 'capstone';
+    private $dbname = 'cugondb';
 
     public function connect()
     {
