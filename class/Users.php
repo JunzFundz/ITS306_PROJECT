@@ -1,44 +1,48 @@
 <?php
 include('Connection.php');
 
-class Users extends Connection{
+class Users extends Dbh
+{
 
-    public function register($username, $password)
+    public function register($sanitized_username, $sanitized_password)
     {
         $db = $this->connect();
 
-        $stmt = $db->query("INSERT INTO users (username, password) VALUES ('$username', '$password')");
+        $hash_password = password_hash($sanitized_password, PASSWORD_DEFAULT);
 
-        return $stmt;
+        $stmt = $db->prepare("INSERT INTO users (username, password, date_created) VALUES (?,?,NOW())");
+        $stmt->bind_param("ss", $sanitized_username, $hash_password);
+        $result = $stmt->execute();
+
+        return $result;
     }
 
-    public function loginUser($username, $password)
+    public function login_ni_siya($username, $password)
     {
-        $db = $this->connect();
+        $db = $this->connect(); 
 
-        $stmt = $db->query("SELECT * from users where username = '$username' and password = '$password'");
+        $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        return $stmt;
-    }
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $pass = $row['password'];
 
-    public function deleteUser($id)
-    {
-        $db = $this->connect();
+                if (password_verify($password, $pass)) {
+                    $_SESSION['id'] = $row['id'];
 
-        $stmt = $db->query("DELETE FROM users where u_id = '$id'");
+                    $redirect = ($_SESSION['id'] === 41) ? '../public/admin/home.php' : '../public/user/home.php';
 
-        return $stmt;
-    }
-
-    public function updateUser($username, $password)
-    {
-        $db = $this->connect();
-
-        $stmt = $db->query("UPDATE users SET username = '$username' WHERE ");
-
-        return $stmt;
+                    return $redirect;
+                } else {
+                    return 1; //Incorrect password
+                }
+            }
+        } else {
+            return 2; //User not found
+        }
     }
 
 }
-
-
