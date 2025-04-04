@@ -4,8 +4,8 @@ class Dbh
 {
     private $host = 'localhost';
     private $username = 'root';
-    private $password = 'fundador142';
-    private $dbname = 'cugondb';
+    private $password = '';
+    private $dbname = '';
 
     public function connect()
     {
