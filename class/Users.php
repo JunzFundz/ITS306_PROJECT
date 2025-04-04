@@ -10,9 +10,15 @@ class Users extends Dbh
 
         $hash_password = password_hash($sanitized_password, PASSWORD_DEFAULT);
 
-        $stmt = $db->prepare("INSERT INTO users (username, password, date_created) VALUES (?,?,NOW())");
+        $stmt = $db->prepare("INSERT INTO users (username, password, created_at) VALUES (?,?,NOW())");
         $stmt->bind_param("ss", $sanitized_username, $hash_password);
         $result = $stmt->execute();
+
+        // if($result){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
 
         return $result;
     }
@@ -31,9 +37,9 @@ class Users extends Dbh
                 $pass = $row['password'];
 
                 if (password_verify($password, $pass)) {
-                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['user_id'] = $row['user_id'];
 
-                    $redirect = ($_SESSION['id'] === 54) ? '../public/admin/home.php' : '../public/user/home.php';
+                    $redirect = ($_SESSION['user_id'] === 341) ? '../public/admin/home.php' : '../public/user/home.php';
 
                     return $redirect;
                 } else {
@@ -51,5 +57,4 @@ class Users extends Dbh
         return $total;
 
     }
-
 }
