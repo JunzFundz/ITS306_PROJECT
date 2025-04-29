@@ -25,7 +25,7 @@ class Users extends Dbh
 
     public function login($username, $password)
     {
-        $db = $this->connect(); 
+        $db = $this->connect();
 
         $stmt = $db->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
@@ -51,10 +51,14 @@ class Users extends Dbh
         }
     }
 
-    public function total($price, $quantity)
+    public function viewRooms()
     {
-        $total = $price * $quantity;
-        return $total;
+        $db = $this->connect();
 
+        $stmt = $db->query("SELECT * FROM items");
+        $result = $stmt->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
     }
+
 }

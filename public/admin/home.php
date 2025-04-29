@@ -10,6 +10,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <title>Admin dashboard</title>
 </head>
 
@@ -68,7 +69,7 @@ session_start();
                 <legend class="fieldset-legend" id="description">Description</legend>
                 <textarea class="textarea h-24" placeholder="Bio"></textarea>
                 <br>
-                <button class="btn btn-soft btn-primary mt-5 add-room">Submit</button>
+                <button class="btn btn-soft btn-primary mt-5 submit_form" id="submit_form">Submit</button>
             </center>
         </div>
     </dialog>
@@ -80,14 +81,15 @@ session_start();
 <script>
     $(document).ready(function() {
 
-        $('.add-room').on('click', function(e) {
+        $('.submit_form').on('click', function(e) {
             e.preventDefault();
 
             const rname = $('#rname').val();
             const rnumber = $('#rnumber').val();
             const quantity = $('#quantity').val();
             const price = $('#price').val();
-            const description = $('#description').text();
+            const description = $('#description').val();
+            const idnumber = $('#idnumber').val();
 
             const fileInput = document.getElementById('file_input');
             const files = fileInput.files;
@@ -98,6 +100,7 @@ session_start();
             formData.append('rnumber', rnumber);
             formData.append('quantity', quantity);
             formData.append('price', price);
+            formData.append('description', description);
             formData.append('description', description);
 
             for (let i = 0; i < files.length; i++) {

@@ -36,7 +36,7 @@ if (isset($_POST['add_room'])) {
     $img = !empty($imagePaths) ? json_encode($imagePaths) : NULL;
 
     $result = $user->addRoom($room, $rnumber, $quantity, $price, $description, $img);
-    
+
     if ($result) {
         $response = array(
             'success' => "Room added!",
@@ -49,3 +49,5 @@ if (isset($_POST['add_room'])) {
     echo json_encode($response);
     exit;
 }
+
+
