@@ -45,4 +45,32 @@ class Admin extends Dbh
 
         return $result;
     }
+
+    
+    public function viewOrders()
+    {
+        $db = $this->connect();
+
+        $stmt = $db->query("SELECT * FROM orders WHERE status = 'Cancelled'");
+        $result = $stmt->fetch_all(MYSQLI_ASSOC);
+
+        return $result;
+    }
+
+    public function updateStatus($id)
+    {
+        $db = $this->connect();
+
+        $stmt = $db->prepare("UPDATE orders SET status = 'Cancelled' WHERE order_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        if($stmt->affected_rows > 0){
+            return 1; //true
+        }else{
+            return 2; //error
+        }
+
+        return 3; //error
+    }
 }
